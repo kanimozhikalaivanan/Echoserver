@@ -28,67 +28,50 @@ Testing the webserver
 
 ## PROGRAM:
 ```
-from http.server import HTTPServer,BaseHTTPRequestHandler
+client.py
 
-content='''
-<!doctype html>
-<html>
-<head>
-<title> My Web Server</title>
-</head>
-<body>
-<h1>Top Five Web Application Development Frameworks</h1>
-<h2>1.Django</h2>
-<h2>2. MEAN Stack</h2>
-<h2>3. React </h2>
-</body>
-</html>
+import socket
 
 
-class MyServer(BaseHTTPRequestHandler):
-    def do_GET(self):
-        print("Get request received...")
-        self.send_response(200) 
-        self.send_header("content-type", "text/html")       
-        self.end_headers()
-        self.wfile.write(content.encode())
+HOST = "127.0.0.1"  # The server's hostname or IP address
+PORT = 65432  # The port used by the server
 
-print("This is my webserver") 
-server_address =('keerthi',2323)
-httpd = HTTPServer(server_address,MyServer)
-httpd.serve_forever()
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    s.sendall(b"Hello, world")
+    data = s.recv(1024)
+
+
+print(f"Received {data!r}")
+
 ```
-##  Architecture Diagram
-
-```bash
-+--------------------------+
-|  User's Web Browser      |
-|  (Client: Chrome/Firefox)|
-+-----------+--------------+
-            |
-            |  HTTP Request (GET /)
-            v
-+-----------+--------------+
-|   Python Web Server      |
-| (http.server + Handler)  |
-| - Listens on Port 8000   |
-| - Handles GET Requests   |
-| - Sends HTML Response    |
-+-----------+--------------+
-            |
-            |  HTML Response
-            v
-+--------------------------+
-|  User Sees Rendered Page |
-|  <h1>Hello Web Server</h1>|
-+--------------------------+
 ```
+server.py
+
+import socket
+
+HOST = "127.0.0.1"
+PORT = 65432
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    s.sendall(b"Kanimozhi,25004451")
+    data = s.recv(1024)
+
+print(f"Received {data!r}")
+
+```
+
 
 
 ## OUTPUT:
 ### CLIENT OUTPUT:
+<img width="1280" height="800" alt="kali ep image 2" src="https://github.com/user-attachments/assets/a53de544-dfba-4df1-989f-f9369bb24c90" />
+
 
 ### SERVER OUTPUT:
+<img width="1280" height="800" alt="kali ep 1" src="https://github.com/user-attachments/assets/409a891b-6f58-4b89-9946-28896adff537" />
 
 ## RESULT:
 The program is executed succesfully
